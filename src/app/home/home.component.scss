@@ -17,3 +17,18 @@
     background-clip: padding-box;
     box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
     }
+
+    .status-txt {
+        color: rgb(10, 187, 80);
+        font-size: 1em;
+        font-weight: bold;
+        text-align: center;
+        padding: 1em;
+        text-transform: uppercase;
+    }
+    .action-btn {
+        button {
+            border: none;
+            background: none;
+        }
+    }
