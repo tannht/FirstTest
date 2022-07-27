@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TasksService } from '../services/tasks.service';
-import { FormBuilder } from '@angular/forms';
+// import { FormBuilder } from '@angular/forms';
 
 
 @Component({
@@ -16,17 +16,17 @@ export class HomeComponent implements OnInit {
   users: any = [];
   priorities : any = [];
   closeResult = '';
-  dataForm : any = this.formBuilder.group({
-    content: '',
-    prioId: '',
-    userId: ''
-  });
+  // dataForm : any = this.formBuilder.group({
+  //   content: '',
+  //   prioId: '',
+  //   userId: ''
+  // });
   contentTask : string = ''
   userId : number = 0;
   priority : number = 0;
   constructor(
     private tasksService: TasksService,
-    private formBuilder: FormBuilder,
+    // private formBuilder: FormBuilder,
   ) { }
   open(conten:any) : void {
     this.openModal.emit(conten);
