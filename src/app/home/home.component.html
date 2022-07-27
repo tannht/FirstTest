@@ -23,9 +23,9 @@
               <tbody>
                 <tr class="fw-normal" *ngFor="let task of taskList ">
                   <th>
-                    <img src={{usrTask(task.userId).avatar}} class="shadow-1-strong rounded-circle"
-                      alt={{usrTask(task.userId).name}} style="width: 55px; height: auto;">
-                    <span class="ms-2">{{usrTask(task.userId).name}}</span>
+                    <img src={{usrTask(task.userId)?.avatar}} class="shadow-1-strong rounded-circle"
+                      alt={{usrTask(task.userId)?.name}} style="width: 55px; height: auto;">
+                    <span class="ms-2">{{usrTask(task.userId)?.name}}</span>
                   </th>
                   <td class="align-middle">
                     <span>{{task.content}}</span>
@@ -35,7 +35,7 @@
                   </td>
                   <td class="align-middle">
                     <h6 class="mb-0"><span
-                        class={{checkStyle(task.prioId)}}>{{taskPrio(task.prioId).priority_name}}</span></h6>
+                        class={{checkStyle(task.prioId)}}>{{taskPrio(task.prioId)?.priority_name}}</span></h6>
                   </td>
                   <td class="align-middle action-btn">
                     <button data-mdb-toggle="tooltip" title="Done" (click)="stickDone(task.id, task.status)">
@@ -46,7 +46,7 @@
                       <i class="fas fa-trash-alt text-danger"></i></button>
                   </td>
                 </tr>
-                
+
               </tbody>
             </table>
             <!-- Button trigger modal -->
@@ -72,27 +72,31 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    <form (ngSubmit)="handelAddTask($event)"> 
+    <form
+    #dataForm="ngForm"
+    (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="taskContent" formControlName="content">Task:</label>
-        <input type="text" class="form-control" id="taskContent" placeholder="Task Content">
-      </div>
 
-      <label for="prio">Priorities:</label>
-      <div class="form-group d-flex row">
-      <div class="form-check col-3 " *ngFor="let pri of priorities" formControlName="prioId">
-        <input class="form-check-input" type="radio" name='prio' id="prio">
-        <label class="form-check-label" for='prio'>
-          {{pri.priority_name}}
-        </label>
+        <label for="taskContent" name="content">Task:</label>
+        <input ngModel type="text" class="form-control" id="taskContent" placeholder="Task Content">
+
+
+        <label for="prio">Priorities:</label>
+        <div class="d-flex row">
+          <div class="form-check col-3 " *ngFor="let pri of priorities" name="prioId">
+            <input ngModel class="form-control form-check-input" type="radio" name='prio' id="prio">
+            <label class="form-check-label" for='prio'>
+              {{pri.priority_name}}
+            </label>
+          </div>
+        </div>
+
+        <label for="prio">Assign to:</label>
+        <select class="form-select" name="userId">
+          <option selected>Select Member</option>
+          <option ngModel class="form-control" *ngFor="let user of users" value={{user.id}}>{{user.name}}</option>
+        </select>
       </div>
-      </div>
-     
-      <label for="prio">Assign to:</label>
-      <select class="form-select" formControlName="userId">
-        <option selected>Select Member</option>
-        <option *ngFor="let user of users" value={{user.id}} >{{user.name}}</option>
-      </select>
     </form>
   </div>
   <div class="modal-footer">
@@ -102,5 +106,6 @@
 </ng-template>
 
 <hr>
+<pre>{{ dataForm.value | json }}</pre>
 
 <pre>{{ closeResult }}</pre>

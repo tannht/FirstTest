@@ -16,11 +16,7 @@ export class HomeComponent implements OnInit {
   users: any = [];
   priorities : any = [];
   closeResult = '';
-  // dataForm : any = this.formBuilder.group({
-  //   content: '',
-  //   prioId: '',
-  //   userId: ''
-  // });
+  dataForm : any = {};
   contentTask : string = ''
   userId : number = 0;
   priority : number = 0;
@@ -63,9 +59,7 @@ export class HomeComponent implements OnInit {
   }
   stickDone(taskId: string, status: boolean) {
     let index = this.taskList.findIndex( (task: any) => task.id === taskId);
-    console.log("index", index);
-    console.log("task", this.taskList[index]);
-    console.log("status", status);
+   
     // toggle status of task
     this.taskList[index].status = !status;
     // update task
@@ -75,14 +69,8 @@ export class HomeComponent implements OnInit {
       console.log("update task----", this.taskList);
     })
   }
-  handelAddTask(dataForm : any) : void {
-    
-    this.taskList.push(dataForm);
-    this.tasksService.addTask(dataForm).subscribe(data => {
-      this.taskList = data;
-      console.log("task----", this.taskList);
-    })
-    this.updateTask.emit();
+  onSubmit() : void {
+    console.log("handel submit")
   }
   ngOnInit(): void {
     this.tasksService.getTasks().subscribe(data => {
