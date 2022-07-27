@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { TasksService } from './services/tasks.service';
 
 
 @Component({
@@ -9,8 +10,12 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 })
 export class AppComponent {
   closeResult = '';
+  content = '';
   title = 'FirstTest';
-  constructor(private modalService: NgbModal) {}
+  taskList : any = [];
+  constructor(
+    private modalService: NgbModal, 
+    private tasksService : TasksService) {}
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -26,5 +31,11 @@ export class AppComponent {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+  updateTask(): void {
+    this.tasksService.getTasks().subscribe(data => {
+      this.taskList = data;
+      console.log("task----", this.taskList);
+    })
   }
 }

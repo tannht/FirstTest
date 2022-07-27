@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./modal-task.component.scss']
 })
 export class ModalTaskComponent implements OnInit {
-  @Input() closeResult:any;
+  @Input() closeResult:any; 
   constructor() { }
   
  

@@ -38,11 +38,11 @@
                         class={{checkStyle(task.prioId)}}>{{taskPrio(task.prioId).priority_name}}</span></h6>
                   </td>
                   <td class="align-middle action-btn">
-                    <button data-mdb-toggle="tooltip" title="Done">
+                    <button data-mdb-toggle="tooltip" title="Done" (click)="stickDone(task.id, task.status)">
                       <i class="fas fa-check text-success me-3"></i></button>
                     <button data-mdb-toggle="tooltip" title="Edit">
                       <i class="fas fa-edit me-3"></i></button>
-                    <button data-mdb-toggle="tooltip" title="Remove">
+                    <button data-mdb-toggle="tooltip" title="Remove" (click)="removeTask(task.id)">
                       <i class="fas fa-trash-alt text-danger"></i></button>
                   </td>
                 </tr>
@@ -53,8 +53,8 @@
           </div>
           <div class="card-footer text-end p-3">
 
-            <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Add Task</button> -->
-            <button class="btn btn-lg btn-outline-primary">Add Task</button>
+            <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Add Task</button>
+            <!-- <button class="btn btn-lg btn-outline-primary">Add Task</button> -->
 
 
           </div>
@@ -64,3 +64,43 @@
     </div>
   </div>
 </section>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="handelAddTask($event)"> 
+      <div class="form-group">
+        <label for="taskContent" formControlName="content">Task:</label>
+        <input type="text" class="form-control" id="taskContent" placeholder="Task Content">
+      </div>
+
+      <label for="prio">Priorities:</label>
+      <div class="form-group d-flex row">
+      <div class="form-check col-3 " *ngFor="let pri of priorities" formControlName="prioId">
+        <input class="form-check-input" type="radio" name='prio' id="prio">
+        <label class="form-check-label" for='prio'>
+          {{pri.priority_name}}
+        </label>
+      </div>
+      </div>
+     
+      <label for="prio">Assign to:</label>
+      <select class="form-select" formControlName="userId">
+        <option selected>Select Member</option>
+        <option *ngFor="let user of users" value={{user.id}} >{{user.name}}</option>
+      </select>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click'); 
+    ">Save</button>
+  </div>
+</ng-template>
+
+<hr>
+
+<pre>{{ closeResult }}</pre>
