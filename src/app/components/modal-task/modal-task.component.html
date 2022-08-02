@@ -1,18 +1,32 @@
-<ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-      <form>
+<div ngIf="isVisible" class="modal-basic-title" >
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="handleClose()"></button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
 
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-    </div>
-  </ng-template>
-  
-  <hr>
-  
-  <pre>{{ closeResult }}</pre>
+        <label for="taskContent"><strong>Task:</strong></label>
+        <input [(ngModel)]="dataForm.contentNew" (change)="onChangeContent($event)" name="contentNew" type="text"
+          class="form-control" id="taskContent" placeholder="Task Content">
+
+        <span><strong>Priority:</strong></span>
+        <div *ngFor="let prio of priorities" (change)="onChangePrio($event)">
+          <input type="radio" name="priority" value={{prio.id}}/>
+          <label for="{{prio.id}}">{{prio.priority_name}}</label>
+        </div>
+
+        <label><strong>Assign to:</strong></label>
+        <select class="form-select" name="userId" (change)="onChangeUserId($event)">
+          <option selected>Select Member</option>
+          <option class="form-control" *ngFor="let user of users" value={{user.id}}>{{user.name}}</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-outline-dark">Save</button>
+      </div>
+    </form>
+  </div>
+
+</div>

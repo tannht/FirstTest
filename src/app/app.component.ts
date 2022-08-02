@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
 import { TasksService } from './services/tasks.service';
 
 
@@ -9,33 +9,33 @@ import { TasksService } from './services/tasks.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  closeResult = '';
-  content = '';
+  // closeResult = '';
+  // content = '';
   title = 'FirstTest';
   taskList : any = [];
   constructor(
-    private modalService: NgbModal, 
+    // private modalService: NgbModal, 
     private tasksService : TasksService) {}
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+  // private getDismissReason(reason: any): string {
+  //   if (reason === ModalDismissReasons.ESC) {
+  //     return 'by pressing ESC';
+  //   } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+  //     return 'by clicking on a backdrop';
+  //   } else {
+  //     return `with: ${reason}`;
+  //   }
   }
-  openModal(content: any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-  updateTask(): void {
-    this.tasksService.getTasks().subscribe(data => {
-      this.taskList = data;
-      console.log("task----", this.taskList);
-    })
-  }
-}
+  // openModal(content: any) {
+  //   this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+  //     this.closeResult = `Closed with: ${result}`;
+  //   }, (reason) => {
+  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  //   });
+  // }
+  // updateTask(): void {
+  //   this.tasksService.getTasks().subscribe(data => {
+  //     this.taskList = data;
+  //     console.log("task----", this.taskList);
+  //   })
+  // }
+
