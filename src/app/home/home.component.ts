@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TasksService } from '../services/tasks.service';
+import { DataForm } from '../share/dataform/dataform';
 // import { FormBuilder } from '@angular/forms';
 
 
@@ -9,17 +10,18 @@ import { TasksService } from '../services/tasks.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  @Input() content:any; 
+  // @Input() content:any; 
   @Output() openModal = new EventEmitter(); updateTask = new EventEmitter();
 
   taskList : any = [];
   users: any = [];
   priorities : any = [];
   closeResult = '';
-  dataForm : any = {};
-  contentTask : string = ''
+  
+  contentNew : string = ''
   userId : number = 0;
-  priority : number = 0;
+  prioId : number = 1;
+  dataForm : DataForm = new DataForm();
   constructor(
     private tasksService: TasksService,
     // private formBuilder: FormBuilder,
@@ -64,13 +66,39 @@ export class HomeComponent implements OnInit {
     this.taskList[index].status = !status;
     // update task
     this.tasksService.updateTask(taskId, this.taskList[index]).subscribe(data => {
+      console.log("dta----", data);
       this.taskList = data;
       this.updateTask.emit();
       console.log("update task----", this.taskList);
     })
   }
+  handleEdit(task: any) : void {
+    this.dataForm.contentNew = task.content;
+    this.dataForm.userId = task.userId;
+    this.dataForm.prioId = task.prioId;
+    this.updateTask.emit();
+  }
   onSubmit() : void {
-    console.log("handel submit")
+    console.log("handel submit---", this.dataForm);
+    this.tasksService.addTask(this.dataForm).subscribe(data => {
+      this.taskList = data;
+      this.updateTask.emit();
+    })
+  }
+  onChangeUserId (event: any) : void {
+    this.dataForm.userId = Number(event.target.value);
+    console.log("userId----", this.dataForm.prioId);
+
+  }
+  onChangePrio(event: any) : void {
+    this.dataForm.prioId = Number(event.target.value)
+    console.log("PrioId----", this.dataForm.prioId);
+
+  }
+  
+  onChangeContent(event: any) : void {
+    this.dataForm.contentNew = event.target.value;
+    console.log("dataForm----", this.dataForm.contentNew);
   }
   ngOnInit(): void {
     this.tasksService.getTasks().subscribe(data => {
@@ -85,6 +113,7 @@ export class HomeComponent implements OnInit {
       this.priorities = priorities;
 
     })
+    
     
   }
 
