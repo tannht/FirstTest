@@ -81,22 +81,24 @@ export class HomeComponent implements OnInit {
     this.dataForm.contentNew = task.newContent;
     this.dataForm.userId = task.userId;
     this.dataForm.prioId = task.prioId;
-    this.updateTask.emit();
-
-
+    // this.updateTask.emit();
   }
   onSubmit() : void {
     console.log("handel submit---", this.dataForm);
     this.tasksService.addTask(this.dataForm).subscribe(data => {
-      this.taskList = data;
-      this.updateTask.emit();
+    // this.taskList = data;
+    // console.log("data----", data);
+    this.getTask();
+    console.log("task----", this.taskList);
     })
   }
+
   onChangeUserId (event: any) : void {
     this.dataForm.userId = Number(event.target.value);
     console.log("userId----", this.dataForm.prioId);
 
   }
+
   onChangePrio(event: any) : void {
     this.dataForm.prioId = Number(event.target.value)
     console.log("PrioId----", this.dataForm.prioId);
@@ -108,11 +110,20 @@ export class HomeComponent implements OnInit {
     console.log("dataForm----", this.dataForm.contentNew);
 
   }
-  ngOnInit(): void {
+
+  getTask () : void {
     this.tasksService.getTasks().subscribe(data => {
       this.taskList = data;
       console.log("task----", this.taskList);
     })
+  }
+
+  ngOnInit(): void {
+    this.getTask();
+    // this.tasksService.getTasks().subscribe(data => {
+    //   this.taskList = data;
+    //   console.log("task----", this.taskList);
+    // })
     this.tasksService.getUsers().subscribe(users => {
       this.users = users;
 
