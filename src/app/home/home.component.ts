@@ -54,10 +54,8 @@ export class HomeComponent implements OnInit {
   }
   removeTask(taskId: string) {
     this.tasksService.deleteTask(taskId).subscribe(data => {
-      this.taskList = data;
-      this.updateTask.emit();
-      console.log("delete task----", this.taskList);
-      this.updateTask.emit();
+      
+     this.getTask();
     })
   }
   stickDone(taskId: string, status: boolean) {
@@ -69,9 +67,8 @@ export class HomeComponent implements OnInit {
     let task = this.taskList.find( (task: any) => task.id === taskId);
     task.status = !status;
     this.tasksService.updateTask(taskId, this.taskList[index]).subscribe(data => {
-      console.log("dta----", data);
-      this.taskList = data;
-      this.updateTask.emit();
+     
+      this.getTask();
       console.log("update task----", this.taskList);
     })
   }
