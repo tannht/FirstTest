@@ -40,7 +40,7 @@
                   <td class="align-middle action-btn">
                     <button data-mdb-toggle="tooltip" title="Done" (click)="stickDone(task.id, task.status)">
                       <i class="fas fa-check text-success me-3"></i></button>
-                    <button data-mdb-toggle="tooltip" title="Edit" (click)="handleEdit(task.id)">
+                    <button data-mdb-toggle="tooltip" title="Edit" (click)="handleEdit(task, content)">
                       <i class="fas fa-edit me-3"></i></button>
                     <button data-mdb-toggle="tooltip" title="Remove" (click)="removeTask(task.id)">
                       <i class="fas fa-trash-alt text-danger"></i></button>

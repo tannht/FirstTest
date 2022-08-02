@@ -10,7 +10,7 @@ import { DataForm } from '../share/dataform/dataform';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  // @Input() content:any; 
+  @Input() content:any; 
   @Output() openModal = new EventEmitter(); updateTask = new EventEmitter();
 
   taskList : any = [];
@@ -57,6 +57,7 @@ export class HomeComponent implements OnInit {
       this.taskList = data;
       this.updateTask.emit();
       console.log("delete task----", this.taskList);
+      this.updateTask.emit();
     })
   }
   stickDone(taskId: string, status: boolean) {
@@ -65,6 +66,8 @@ export class HomeComponent implements OnInit {
     // toggle status of task
     this.taskList[index].status = !status;
     // update task
+    let task = this.taskList.find( (task: any) => task.id === taskId);
+    task.status = !status;
     this.tasksService.updateTask(taskId, this.taskList[index]).subscribe(data => {
       console.log("dta----", data);
       this.taskList = data;
@@ -72,11 +75,15 @@ export class HomeComponent implements OnInit {
       console.log("update task----", this.taskList);
     })
   }
-  handleEdit(task: any) : void {
-    this.dataForm.contentNew = task.content;
+  handleEdit(task : any, content : any) : void {
+
+    this.open(content);
+    this.dataForm.contentNew = task.newContent;
     this.dataForm.userId = task.userId;
     this.dataForm.prioId = task.prioId;
     this.updateTask.emit();
+
+
   }
   onSubmit() : void {
     console.log("handel submit---", this.dataForm);
@@ -99,6 +106,7 @@ export class HomeComponent implements OnInit {
   onChangeContent(event: any) : void {
     this.dataForm.contentNew = event.target.value;
     console.log("dataForm----", this.dataForm.contentNew);
+
   }
   ngOnInit(): void {
     this.tasksService.getTasks().subscribe(data => {
