@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit {
   userId : number = 0;
   prioId : number = 1;
   dataForm : DataForm = new DataForm();
+  selectedPrioId : number = 0;
+  selectedUserId : number = 0;
   constructor(
     private tasksService: TasksService,
     // private formBuilder: FormBuilder,
@@ -75,11 +77,17 @@ export class HomeComponent implements OnInit {
   handleEdit(task : any, content : any) : void {
 
     this.open(content);
+    this.dataForm = {...task};
     this.dataForm.contentNew = task.contentNew;
     this.dataForm.userId = task.userId;
     this.dataForm.prioId = task.prioId;
+    this.selectedPrioId = task.prioId;
+    this.selectedUserId = task.userId;
+    console.log(task.prioId);
     // this.updateTask.emit();
   }
+  
+  
   onSubmit() : void {
     console.log("handel submit---", this.dataForm);
     this.tasksService.addTask(this.dataForm).subscribe(data => {

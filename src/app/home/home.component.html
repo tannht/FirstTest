@@ -81,14 +81,15 @@
 
         <span><strong>Priority:</strong></span>
         <div *ngFor="let prio of priorities" (change)="onChangePrio($event)">
-          <input type="radio" name="priority" value={{prio.id}} checked />
-          <label for="{{prio.id}}">{{prio.priority_name}}</label>
+          <input  type="radio" name="priority" value={{prio.id}} [checked]="selectedPrioId.toString()===prio.id.toString()" />
+          <!-- <input ngIf="{{prio.id !== dataForm.prioId}}" type="radio" name="priority" value={{prio.id}} /> -->
+          <label for="{{prio.id}}">{{prio.priority_name}} - {{prio.id}} - {{selectedPrioId}}</label>
         </div>
 
         <label><strong>Assign to:</strong></label>
         <select class="form-select" name="userId" (change)="onChangeUserId($event)">
           <option >Select Member</option>
-          <option selected class="form-control" *ngFor="let user of users" value={{user.id}}>{{user.name}}</option>
+          <option [selected]="selectedUserId.toString()===user.id.toString()" class="form-control" *ngFor="let user of users" value={{user.id}}>{{user.name}}</option>
         </select>
       </div>
       <div class="modal-footer">
