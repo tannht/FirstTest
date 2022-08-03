@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit {
   handleEdit(task : any, content : any) : void {
 
     this.open(content);
-    this.dataForm.contentNew = task.newContent;
+    this.dataForm.contentNew = task.contentNew;
     this.dataForm.userId = task.userId;
     this.dataForm.prioId = task.prioId;
     // this.updateTask.emit();

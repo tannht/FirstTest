@@ -81,14 +81,14 @@
 
         <span><strong>Priority:</strong></span>
         <div *ngFor="let prio of priorities" (change)="onChangePrio($event)">
-          <input type="radio" name="priority" value={{prio.id}}/>
+          <input type="radio" name="priority" value={{prio.id}} checked />
           <label for="{{prio.id}}">{{prio.priority_name}}</label>
         </div>
 
         <label><strong>Assign to:</strong></label>
         <select class="form-select" name="userId" (change)="onChangeUserId($event)">
-          <option selected>Select Member</option>
-          <option class="form-control" *ngFor="let user of users" value={{user.id}}>{{user.name}}</option>
+          <option >Select Member</option>
+          <option selected class="form-control" *ngFor="let user of users" value={{user.id}}>{{user.name}}</option>
         </select>
       </div>
       <div class="modal-footer">
